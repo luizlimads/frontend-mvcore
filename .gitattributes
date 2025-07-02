@@ -1,0 +1,23 @@
+# Definir o comportamento padrão para todos os arquivos de texto
+# Git vai tentar detectar se é um arquivo de texto e normalizar as terminações de linha
+* text=auto
+
+# Forçar explicitamente o uso de LF para os tipos de arquivos mais comuns em projetos web
+# Isso instrui o Git a sempre usar LF no repositório para estes arquivos
+*.js      text eol=lf
+*.ts      text eol=lf
+*.tsx     text eol=lf
+*.vue     text eol=lf
+*.css     text eol=lf
+*.scss    text eol=lf
+*.html    text eol=lf
+*.json    text eol=lf
+*.md      text eol=lf
+*.yml     text eol=lf
+*.yaml    text eol=lf
+
+# Manter a terminação de linha original para arquivos de imagem ou binários
+*.png     binary
+*.jpg     binary
+*.gif     binary
+*.svg     text eol=lf

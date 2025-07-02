@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Troque pela URL real da sua API
+const API_BASE_URL = "https://backend-mvcore-d3byagbfchgnf5dw.brazilsouth-01.azurewebsites.net"; // Troque pela URL real da sua API
 
 export const ENDPOINTS = {
   // Adicionamos um endpoint para autenticação

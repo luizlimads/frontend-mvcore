@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <v-data-table
   :headers="headers"
   :items="items"
@@ -53,4 +53,4 @@ const headers = [
   });
 
   
-</script>
+</script> -->

@@ -35,11 +35,13 @@
 <script setup lang="ts">
   import { ref, computed, onMounted } from 'vue';
   import { useFormatters } from '@/composables/useFormatters';
-  import { apiService, type Lancamento } from '@/services/apiService'; // Usando o serviço que criamos antes
+  import { apiService } from '@/services/apiService'; // Usando o serviço que criamos antes
 
   import SummaryCard from '@/components/SummaryCard.vue';
   import EntradasDespesasChart from '@/components/EntradasDespesasChart.vue';
   import HierarchicalTable from '@/components/HierarchicalTable.vue';
+
+  import type {Lancamento} from '@/type'
 
   const { formatCurrency } = useFormatters();
   const error = ref<string | null>(null);

@@ -5,6 +5,7 @@ import { accessService } from './accessService';
 import type { ApiResponse, AuthResponse, Item, Lancamento, Erps, Tenants } from '@/type';
 
 
+
 export const apiService = {
   /**
    * Autentica o usuário e salva o access.

@@ -10,11 +10,9 @@ declare module 'vue' {
   export interface GlobalComponents {
     AppFooter: typeof import('./components/AppFooter.vue')['default']
     ComparativeOperationsChart: typeof import('./components/ComparativeOperationsChart.vue')['default']
-    copy: typeof import('./components/ModalRegisterTenant copy.vue')['default']
     EntradasDespesasChart: typeof import('./components/EntradasDespesasChart.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     HierarchicalTable: typeof import('./components/HierarchicalTable.vue')['default']
-    ModalRegister: typeof import('./components/ModalRegisterTenant.vue')['default']
     ModalRegisterTenant: typeof import('./components/ModalRegisterTenant.vue')['default']
     ModalRegisterUser: typeof import('./components/ModalRegisterUser.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
@@ -22,6 +20,5 @@ declare module 'vue' {
     SimpleDonutChart: typeof import('./components/SimpleDonutChart.vue')['default']
     SimpleTable: typeof import('./components/SimpleTable.vue')['default']
     SummaryCard: typeof import('./components/SummaryCard.vue')['default']
-    SummaryCards: typeof import('./components/SummaryCards.vue')['default']
   }
 }

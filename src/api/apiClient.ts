@@ -1,49 +1,44 @@
 
 import axios, { type InternalAxiosRequestConfig } from 'axios';
+import { ENDPOINTS } from '../constants/endpoints';
 import { accessService as accessService } from '@/services/accessService';
+import router from '@/router';
 
-// Cria a instância do Axios
 const apiClient = axios.create();
 
-// 1. Interceptor de Requisição (Request Interceptor)
-// Este interceptor é executado ANTES de cada requisição ser enviada.
+const publicRoutes = [
+  ENDPOINTS.LOGIN,
+];
+
 apiClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    // Pega o access do nosso serviço de access
-    const access = accessService.getAccess();
 
-    // Se o access existir, adiciona ao cabeçalho de autorização
-    if (access) {
-      config.headers.Authorization = `JWT ${access}`;
+    const isPublicRoute = publicRoutes.includes(config.url || '');
+    if (isPublicRoute) {
+      return config;
     }
 
-    return config; // Retorna a configuração modificada para a requisição continuar
+    const access = accessService.getAccess();    
+    if (access) {
+      config.headers.Authorization = `JWT ${access}`;
+      return config;
+    }
+
+    router.push('/');
+    return Promise.reject(new Error("Token de acesso não encontrado."));
   },
   (error) => {
-    // Se ocorrer um erro na configuração da requisição
     return Promise.reject(error);
   }
 );
 
-// 2. Interceptor de Resposta (Response Interceptor)
-// Este interceptor é executado DEPOIS que uma resposta da API é recebida.
 apiClient.interceptors.response.use(
-  (response) => {
-    // Se a resposta for bem-sucedida (status 2xx), apenas a retorna.
-    return response;
-  },
-  (error) => {
-    // Se a API retornar um erro
-    if (error.response && error.response.status === 401) {
-      // Erro 401 significa "Não Autorizado" (access inválido ou expirado)
-      accessService.removeAccess(); // Remove o access inválido
-      // Redireciona o usuário para a página de login
-      // Evita o loop de redirecionamento se já estiver na página de login
-      if (window.location.pathname !== '/login') {
-         window.location.href = '/login';
-      }
+  response => response,
+  async error => {
+    if (error.response?.status === 401) {
+      accessService.removeAccess();
+      router.push('/');
     }
-    // Rejeita a promessa para que o bloco .catch() no componente possa tratar outros erros.
     return Promise.reject(error);
   }
 );

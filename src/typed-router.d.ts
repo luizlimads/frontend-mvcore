@@ -19,10 +19,13 @@ declare module 'vue-router/auto-routes' {
    */
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
-    '/administracao': RouteRecordInfo<'/administracao', '/administracao', Record<never, never>, Record<never, never>>,
+    '/[...all]': RouteRecordInfo<'/[...all]', '/:all(.*)', { all: ParamValue<true> }, { all: ParamValue<false> }>,
+    '/administracao/': RouteRecordInfo<'/administracao/', '/administracao', Record<never, never>, Record<never, never>>,
+    '/administracao/clientes': RouteRecordInfo<'/administracao/clientes', '/administracao/clientes', Record<never, never>, Record<never, never>>,
+    '/administracao/perfil': RouteRecordInfo<'/administracao/perfil', '/administracao/perfil', Record<never, never>, Record<never, never>>,
+    '/administracao/sistemas': RouteRecordInfo<'/administracao/sistemas', '/administracao/sistemas', Record<never, never>, Record<never, never>>,
+    '/administracao/usuarios': RouteRecordInfo<'/administracao/usuarios', '/administracao/usuarios', Record<never, never>, Record<never, never>>,
     '/financeiro': RouteRecordInfo<'/financeiro', '/financeiro', Record<never, never>, Record<never, never>>,
-    '/lucratividade': RouteRecordInfo<'/lucratividade', '/lucratividade', Record<never, never>, Record<never, never>>,
-    '/pagamentos': RouteRecordInfo<'/pagamentos', '/pagamentos', Record<never, never>, Record<never, never>>,
-    '/resultados': RouteRecordInfo<'/resultados', '/resultados', Record<never, never>, Record<never, never>>,
+    '/perfil': RouteRecordInfo<'/perfil', '/perfil', Record<never, never>, Record<never, never>>,
   }
 }

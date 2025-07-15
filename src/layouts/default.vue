@@ -1,45 +1,25 @@
-<!-- src/layouts/default.vue -->
 <template>
   <v-app>
-    <!-- Fundo azul médio da tela inteira -->
-    <v-main class="bg-primary" style="min-height: 100vh;">
-      <!-- "Cartão" central (sidebar + conteúdo no mesmo card) -->
+    <v-main class="bg-background" style="min-height: 100vh;">
       <v-container class="py-6" style="max-width: 98%;">
         <v-sheet elevation="6" rounded="lg" class="d-flex" style="overflow: hidden;">
-          <!-- Sidebar como parte do card -->
-          <div style="width: 240px; background-color: #172c41; color: white;" class="pa-4">
-            <v-list dense nav style="background-color: #172c41;">
-              <v-list-item class="justify-center mb-6">
-                <v-img
-                  src="@/assets/MV Core - LOGO SEM SLOGAN - COLOR.png"
-                  alt="Logo MVCore"
-                  max-width="160"
-                  contain
-                />
-              </v-list-item>
+          <Sidebar />
 
-              <v-list-item
-                v-for="item in navItems"
-                :key="item.title"
-                :to="item.route"
-                link
-                class="rounded nav-hover"
-                active-class="bg-primary text-white"
-              >
-                <template #prepend>
-                  <v-icon>{{ item.icon }}</v-icon>
-                </template>
-                <v-list-item-title class="text-subtitle-1">{{ item.title }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </div>
-
-          <!-- Área de conteúdo principal -->
           <div class="flex-grow-1 d-flex flex-column">
+            <div class="d-flex justify-space-between align-center px-6 py-4 bg-lightbackground">
+              <h1 
+                class="text-h4 font-weight-bold m-0 text-primary"
+                style="text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);"
+              >
+                {{ currentPageTitle }}
+              </h1>
 
-            <!-- Conteúdo da página -->
-            <v-main class="pa-6 bg-grey-lighten-5" style="min-height: calc(100vh - 64px);">
+              <UserMenu />
+            </div>
+
+            <v-main class="pa-6 bg-lightbackground" style="min-height: calc(100vh - 140px);">
               <router-view />
+              <BaseSnackbar />
             </v-main>
           </div>
         </v-sheet>
@@ -49,21 +29,27 @@
 </template>
 
 <script setup lang="ts">
+import { useRoute } from 'vue-router'
+import { computed } from 'vue'
+import Sidebar from '@/components/default/Sidebar.vue'
+import UserMenu from '@/components/default/UserMenu.vue'
+import BaseSnackbar from '@/components/default/BaseSnackbar.vue';
+
+const route = useRoute()
+
 const navItems = [
-  { title: 'Financeiro', icon: 'mdi-home', route: '/financeiro' },
-  { title: 'Lucratividade', icon: 'mdi-finance', route: '/lucratividade' },
-  { title: 'Pagamentos', icon: 'mdi-cash-multiple', route: '/pagamentos' },
-  { title: 'Resultados', icon: 'mdi-chart-pie', route: '/resultados' },
-  { title: 'Administração', icon: 'mdi-cog', route: '/administracao' }
+  { title: 'Financeiro', route: '/financeiro' },
+  { title: 'Lucratividade', route: '/lucratividade' },
+  { title: 'Pagamentos', route: '/pagamentos' },
+  { title: 'Resultados', route: '/resultados' },
+  { title: 'Administração', route: '/administracao' },
+  { title: 'Administração > Sistemas integrados', route: '/administracao/sistemas' },
+  { title: 'Administração > Clientes', route: '/administracao/clientes' },
+  { title: 'Administração > Usuários', route: '/administracao/usuarios' }
 ]
+
+const currentPageTitle = computed(() => {
+  const match = navItems.find(item => item.route === route.path)
+  return match?.title || 'MVCore'
+})
 </script>
-
-<style scoped>
-.bg-primary {
-  background-color: #22415e !important;
-}
-
-.nav-hover:hover {
-  background-color: #22415e !important;
-}
-</style>

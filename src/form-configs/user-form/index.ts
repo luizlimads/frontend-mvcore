@@ -1,10 +1,9 @@
 import type { FormField } from '@/type/index';
 import { baseFields as bFields } from './baseFields';
+import { createFields as cFields } from './createField';
 
-// Mapa de campos específicos por nome do sistema
-const systemSpecificFields: Record<string, FormField[]> = {
-  // Adicione novos sistemas aqui
-};
+
 
 export const baseFields = bFields;
-export { systemSpecificFields };
+export const createFields = cFields;
+

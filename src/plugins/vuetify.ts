@@ -14,6 +14,28 @@ import { createVuetify } from 'vuetify'
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
 export default createVuetify({
   theme: {
-    defaultTheme: 'dark',
+    defaultTheme: 'mvcoreTheme',
+    themes: {
+      mvcoreTheme: {
+        dark: false,
+        colors: {
+          // Paleta principal
+          primary: '#172C41',
+          secondary: '#F5F5F5',
+
+          // Semânticas
+          success: '#1B5E20',
+          error: '#B71C1C',
+          warning: '#FFB300',
+          info: '#0D47A1',
+
+          // Personalizadas (usadas por nome)
+          background: '#22415E',
+          lightbackground: '#CFD8DC',
+          chart01: '#0277BD',
+          chart02: '#BA68C8'
+        }
+      }
+    }
   },
 })

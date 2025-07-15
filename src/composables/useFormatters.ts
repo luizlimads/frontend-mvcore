@@ -1,3 +1,7 @@
+import dayjs from 'dayjs';
+import type { Tenant } from '@/type';
+
+
 export function useFormatters() {
   
     const formatCurrency = (value: number): string => {
@@ -9,12 +13,25 @@ export function useFormatters() {
         }).format(value);
       };
   
-    const formatDate = (date: Date): string => {
-      return date.toLocaleDateString('pt-BR');
+    const formatDate = (data: string | Date | null | undefined): string => {
+      if (!data) return 'Data indisponível';
+      const dataObj = new Date(data);
+      if (isNaN(dataObj.getTime())) {
+        return 'Data inválida';
+      }
+      return dayjs(dataObj).format('DD/MM/YYYY HH:mm');
+    };
+
+    const getTenantDisplayName = (tenant: Partial<Tenant> | null | undefined): string => {
+      if (!tenant) {
+        return 'Não identificado';
+      }
+      return tenant.nome_fantasia || tenant.razao_social || tenant.documento || 'Não identificado';
     };
   
     return {
       formatCurrency,
       formatDate,
+      getTenantDisplayName,
     };
   }

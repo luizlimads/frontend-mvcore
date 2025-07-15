@@ -33,6 +33,7 @@
   import { baseFields, createFields } from '@/form-configs/user-form'; 
   import type { FormField, FormConfig, User } from "@/type"
   import { SYSTEM_MESSAGES } from '@/constants/messages';
+  import { parseApiError } from '@/utils/apiErrorParser';
   import { VALIDATION_CONSTANTS } from '@/constants/validators';
 
 
@@ -113,7 +114,8 @@
 
       dialogModal.value = false;
     } catch (apiError: any) {
-      snackbarDataStore.showSnackbar(SYSTEM_MESSAGES.ERROR.GENERAL, 'error');      
+      const friendlyErrorMessage = parseApiError(apiError)
+      snackbarDataStore.showSnackbar(friendlyErrorMessage, 'error');      
     } finally {
       loading.value = false;
     }
@@ -122,7 +124,7 @@
   watch(
     [() => formData.email, () => formData.tenant], 
     ([newEmail, newTenantId]) => {
-      if (newEmail && newTenantId) {
+      if (newEmail && newTenantId && !formData.password) {
         const userPart = newEmail.split("@")[0].toLowerCase();
         const tenant = tenants.value.find(t => t.id === newTenantId);
         const tenantPart = tenant ? tenant.nome_fantasia.split(" ")[0].toLowerCase() : '';

@@ -1,13 +1,6 @@
 export const requiredRule = (value: any): boolean | string => {
     return !!value || 'Este campo é obrigatório.';
   };
-
-
-export const noLeadingTrailingSpaceRule = (value: string): boolean | string => {
-  if (!value) return true;
-  return value === value.trim() || 'O campo não deve começar ou terminar com espaços.';
-}
-
   
 export const emailRule = (value: string): boolean | string => {
   if (!value) return true; // A regra 'required' cuida dos casos vazios

@@ -22,6 +22,14 @@ export function useFormatters() {
       return dayjs(dataObj).format('DD/MM/YYYY HH:mm');
     };
 
+    const formatPercent = (value: number): string => {
+      return new Intl.NumberFormat('pt-BR', {
+        style: 'percent',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(value);
+    };
+
     const getTenantDisplayName = (tenant: Partial<Tenant> | null | undefined): string => {
       if (!tenant) {
         return 'Não identificado';
@@ -32,6 +40,7 @@ export function useFormatters() {
     return {
       formatCurrency,
       formatDate,
+      formatPercent,
       getTenantDisplayName,
     };
   }

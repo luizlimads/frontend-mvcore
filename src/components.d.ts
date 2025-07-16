@@ -18,6 +18,7 @@ declare module 'vue' {
     DeleteUserModal: typeof import('./components/modal/DeleteUserModal.vue')['default']
     EditTenantModal: typeof import('./components/modal/EditTenantModal.vue')['default']
     EditUserModal: typeof import('./components/modal/EditUserModal.vue')['default']
+    ReceitasDespesasChart: typeof import('./components/charts/financeiro/ReceitasDespesasChart.vue')['default']
     RecoverPasswordModal: typeof import('./components/modal/RecoverPasswordModal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

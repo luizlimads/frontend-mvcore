@@ -33,7 +33,10 @@ export default createVuetify({
           background: '#22415E',
           lightbackground: '#CFD8DC',
           chart01: '#0277BD',
-          chart02: '#BA68C8'
+          chart02: '#BA68C8',
+          chart03: '#4DB6AC',
+          chart04: '#7E57C2',
+          chart05: '#66BB6A',
         }
       }
     }

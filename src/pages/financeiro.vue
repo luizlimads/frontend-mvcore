@@ -170,17 +170,6 @@
 
   const handleLancamento = async () => {
     try {
-      error.value = null;
-      let response = await lancamentoService.fetchAll('2025-02-03','2025-02-03');
-      lancamentos.value = response.data;
-
-      lancamentosDeCredito.value = lancamentos.value
-      .filter(lanc => lanc.tipo === 'Crédito')
-      .map(lanc => lanc.valor);
-
-      lancamentosDeDebito.value = lancamentos.value
-      .filter(lanc => lanc.tipo === 'Débito')
-      .map(lanc => lanc.valor);
 
     } catch (e) {
       error.value = 'Falha na autenticação. Verifique suas credenciais.';

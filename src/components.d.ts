@@ -9,9 +9,9 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AppFooter: typeof import('./components/AppFooter.vue')['default']
-    BaseCard: typeof import('./components/Default/BaseCard.vue')['default']
-    BaseModal: typeof import('./components/Default/BaseModal.vue')['default']
-    BaseSnackbar: typeof import('./components/Default/BaseSnackbar.vue')['default']
+    BaseCard: typeof import('./components/default/BaseCard.vue')['default']
+    BaseModal: typeof import('./components/default/BaseModal.vue')['default']
+    BaseSnackbar: typeof import('./components/default/BaseSnackbar.vue')['default']
     ChangePasswordModal: typeof import('./components/modal/ChangePasswordModal.vue')['default']
     ClickCard: typeof import('./components/ClickCard.vue')['default']
     DeleteTenantModal: typeof import('./components/modal/DeleteTenantModal.vue')['default']
@@ -22,10 +22,10 @@ declare module 'vue' {
     RecoverPasswordModal: typeof import('./components/modal/RecoverPasswordModal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Sidebar: typeof import('./components/Default/Sidebar.vue')['default']
+    Sidebar: typeof import('./components/default/Sidebar.vue')['default']
     SystemTable: typeof import('./components/SystemTable.vue')['default']
     TenantTable: typeof import('./components/TenantTable.vue')['default']
-    UserMenu: typeof import('./components/Default/UserMenu.vue')['default']
+    UserMenu: typeof import('./components/default/UserMenu.vue')['default']
     UserTable: typeof import('./components/UserTable.vue')['default']
   }
 }

@@ -21,7 +21,7 @@
       </v-col>
       <v-col cols="12" md="4">
         <v-card
-          class="pa-5 pt-10 pb-10 text-white" color="#38A169"
+          class="pa-5 pt-10 pb-10 text-white"
           style="background-color: rgba(56, 161, 105, 0.8)"
           elevation="0"
         >
@@ -114,7 +114,7 @@
     </v-row>
 
     <v-row>
-      <v-col>
+      <v-col cols="12" md="6">
         <ReceitasDespesasChart
             :series="seriesReceitas"
             :categories="categoriasReceitas"
@@ -127,7 +127,7 @@
           </BaseCard>
       </v-col>
 
-      <v-col>
+      <v-col cols="12" md="6">
         <ReceitasDespesasChart
             :series="seriesDespesas"
             :categories="categoriasDespesas"
@@ -149,17 +149,12 @@
   
   import { useFormatters } from '@/composables/useFormatters';
   import { useAlertStore, useSnackbarStore } from '@/stores'
-  import type { Lancamento } from '@/type';
   import ReceitasDespesasChart from '@/components/charts/financeiro/ReceitasDespesasChart.vue';
  
   const alertDataStore = useAlertStore()
   const snackbarDataStore = useSnackbarStore()  
   
   const { formatCurrency, formatPercent } = useFormatters();
-  const error = ref<string | null>(null);
-  const lancamentos = ref<Lancamento[]>([]);
-  const lancamentosDeCredito = ref<number[]>([]);
-  const lancamentosDeDebito = ref<number[]>([]);
   
   const alertMessage = computed(() => alertDataStore.message)
   
@@ -167,20 +162,7 @@
     snackbarDataStore.showSnackbar(alertMessage.value, 'warning');
     alertDataStore.clearMessage()
   }
-
-  const handleLancamento = async () => {
-    try {
-
-    } catch (e) {
-      error.value = 'Falha na autenticação. Verifique suas credenciais.';
-    }
-  };
-
-  onMounted(() => {
-    handleLancamento();
-  });
-
-  
+ 
   function onPeriodoChange(novoPeriodo: { data_inicial: string, data_final: string }) {
     console.log('Novo período recebido na página:', novoPeriodo);
   }

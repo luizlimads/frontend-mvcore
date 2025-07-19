@@ -41,5 +41,7 @@
 
   const navItems = [
     { title: 'Financeiro', icon: 'mdi-home', route: '/financeiro' },
+    { title: 'Lucratividade', icon: 'mdi-finance', route: '/lucratividade' },
+    { title: 'Resultados', icon: 'mdi-chart-pie', route: '/resultados' },
   ]
 </script>

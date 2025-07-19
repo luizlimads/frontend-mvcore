@@ -1,9 +1,9 @@
 <template>
   <v-container fluid>
+
     <v-row>
       <v-col cols="12" md="2">
-
-        <v-card class="pa-2 mb-4 text-primary bg-secondary">
+        <v-card class="pa-3 pt-9 pb-10 text-primary bg-secondary" elevation="0">
           <v-select
             class="mt-4"
             density="compact"
@@ -18,31 +18,39 @@
             v-model="mesSelecionado"
           />
         </v-card>
-
+      </v-col>
+      <v-col cols="12" md="4">
         <v-card
-          class="pa-5 pt-9 pb-9 mb-4 text-white"
-          style="background: linear-gradient(90deg, #000, #0277BD );"
+          class="pa-5 pt-10 pb-10 text-white" color="#38A169"
+          style="background-color: rgba(56, 161, 105, 0.8)"
+          elevation="0"
         >
           <div class="text-caption font-weight-medium">Saldo líquido</div>
           <div class="text-h6 font-weight-bold">R$ 3.900,00</div>
         </v-card>
-
+      </v-col>
+      <v-col cols="12" md="2">
         <v-card
-          class="pa-5 pt-9 pb-9 mb-4 text-white"
-          style="background: linear-gradient(90deg, #000, #66BB6A );"
+          class="pa-5 pt-10 pb-10 text-white"
+          style="background-color: rgba(56, 161, 105, 0.8)"
+          elevation="0"
         >
           <div class="text-caption font-weight-medium">Entradas</div>
           <div class="text-h6 font-weight-bold">R$ 12.200,00</div>
         </v-card>
-
+      </v-col>
+      <v-col cols="12" md="2">
         <v-card
-          class="pa-5 pt-9 pb-9 mb-4 text-white"
-          style="background: linear-gradient(90deg, #000, #BA68C8 );"
+          class="pa-5 pt-10 pb-10 text-white"
+          style="background-color: rgba(144, 164, 174, 0.8)"
+          elevation="0"
         >
           <div class="text-caption font-weight-medium">Saídas</div>
           <div class="text-h6 font-weight-bold">R$ 8.300,00</div>
         </v-card>
-        <v-card class="pa-4 text-primary bg-secondary">
+      </v-col>
+      <v-col cols="12" md="2">
+        <v-card class="pa-4 pt-3 text-primary bg-secondary" elevation="0">
           <v-row class="text-body-2 font-weight-bold mt-2 mb-5" dense>
             <v-col class="pa-0" cols="6">Contas</v-col>
             <v-col class="pa-0 text-right" cols="6">Saldo</v-col>
@@ -63,9 +71,10 @@
             <v-col class="pa-0 text-right" cols="6">R$ 500,00</v-col>
           </v-row>
         </v-card>
-      </v-col>
-
-      <v-col cols="12" md="5">
+      </v-col>      
+    </v-row>
+    <v-row>
+      <v-col cols="12" md="6">
         <BaseCard>
           <apexchart type="bar" height="250" :options="receitaDespesaOptions" :series="receitaDespesaSeries" />
         </BaseCard>
@@ -78,12 +87,6 @@
             :series="stackedBarSeriesPercent"
           />
         </BaseCard>
-      </v-col>
-
-      <v-col cols="12" md="5">
-        <BaseCard>
-          <apexchart type="area" height="250" :options="saldoOptions" :series="saldoSeries" />
-        </BaseCard>
 
         <BaseCard class="mt-5">
           <apexchart
@@ -94,12 +97,25 @@
           />
         </BaseCard>
       </v-col>
+
+      <v-col cols="12" md="6">
+        <BaseCard>
+          <apexchart type="area" height="250" :options="saldoOptions" :series="saldoSeries" />
+        </BaseCard>
+
+        <BaseCard class="mt-5">        
+          <apexchart type="pie" height="260" :options="categoriaReceitaOptions" :series="categoriaReceitaSeries" />
+        </BaseCard>
+
+        <BaseCard class="mt-5">        
+          <apexchart type="pie" height="260" :options="categoriaDespesaOptions" :series="categoriaDespesaSeries" />
+        </BaseCard>
+      </v-col>
     </v-row>
 
     <v-row>
       <v-col>
         <ReceitasDespesasChart
-            title="Receita operacional por grupos"
             :series="seriesReceitas"
             :categories="categoriasReceitas"
             :options="receitasOptions"
@@ -113,7 +129,6 @@
 
       <v-col>
         <ReceitasDespesasChart
-            title="Despesa operacional por grupos"
             :series="seriesDespesas"
             :categories="categoriasDespesas"
             :options="despesasOptions"
@@ -133,7 +148,6 @@
   import { useTheme } from 'vuetify';
   
   import { useFormatters } from '@/composables/useFormatters';
-  import { financeiroService } from '@/services';
   import { useAlertStore, useSnackbarStore } from '@/stores'
   import type { Lancamento } from '@/type';
   import ReceitasDespesasChart from '@/components/charts/financeiro/ReceitasDespesasChart.vue';
@@ -157,7 +171,7 @@
   const handleLancamento = async () => {
     try {
       error.value = null;
-      let response = await financeiroService.fetchAll('2025-02-03','2025-02-03');
+      let response = await lancamentoService.fetchAll('2025-02-03','2025-02-03');
       lancamentos.value = response.data;
 
       lancamentosDeCredito.value = lancamentos.value
@@ -177,6 +191,14 @@
     handleLancamento();
   });
 
+  
+  function onPeriodoChange(novoPeriodo: { data_inicial: string, data_final: string }) {
+    console.log('Novo período recebido na página:', novoPeriodo);
+  }
+  
+  const theme = useTheme();
+  
+  
   const sparklineBaseOptions = {
     chart: {
       type: 'line',
@@ -187,11 +209,6 @@
     tooltip: { enabled: false },
   };
 
-  function onPeriodoChange(novoPeriodo: { data_inicial: string, data_final: string }) {
-    console.log('Novo período recebido na página:', novoPeriodo);
-  }
-
-  const theme = useTheme();
   const summaryCardsData = ref([
     {
       id: 1,
@@ -243,23 +260,6 @@
     "2024-10-01", "2024-11-01", "2024-12-01"
   ]);
 
-  const receitasEDespesasOptions = ref({
-    chart: {
-      type: 'area',
-    },
-    colors: [theme.current.value.colors.chart01,theme.current.value.colors.chart02],
-    fill:{
-      type: 'gradient',
-      gradient: {
-        shadeIntensity: 1,
-        opacityFrom: 1,
-        opacityTo: 1,
-        stops: [0, 90, 100]
-
-      }
-    }
-  });
-
   // DADOS FICTICIOS DESPESA MES
 const seriesReceitas = ref([
   {
@@ -285,14 +285,13 @@ const categoriasReceitas = ref([
     chart: {
       type: 'bar',
     },
-    colors: [theme.current.value.colors.chart01],
-    title: {
-      style: {
-        fontSize: '15px',
-        fontWeight: 'medium',
-        color: 'primary'
-      }
+    colors: ["#38A169"],
+    fill: {
+      opacity: 0.8
     },
+    title: {
+      text: "Receita operacional por grupos"
+    }
   });
 
 
@@ -321,193 +320,20 @@ const categoriasDespesas = ref([
     chart: {
       type: 'bar',
     },
-    colors: [theme.current.value.colors.chart02],
+    colors: ["#90A4AE"],
+    fill: {
+      opacity: 0.8
+    },
+    title: {
+      text: "Despesa operacional por grupos"
+    }
   });
-  
-  // DADOS FICTICIOS DESPESA DONUT
-  const seriesDDespesas = computed(() => {
-    return seriesDespesas.value[0]?.data || []; 
-  });
-  const despesasDOptions = computed(() => ({
-    chart: { type: 'donut' },
-    labels: categoriasReceitas.value,
-    legend: { position: 'right',      floating: false  },
-    tooltip: {
-      y: { formatter: (value: number) => formatCurrency(value) }
-    },
-    dataLabels: {
-      enabled: true,
-      formatter: (value: number) => `${value.toFixed(1)}%`,
-    },
-    responsive: [{
-      breakpoint: 500,
-      options: {
-        chart: { width: '80%' },
-        legend: { position: 'bottom' }
-      }
-    }]
-  }));
-  
-  // DADOS FICTICIOS RESUMO CONTAS
-  
-  const dadosContas = ref([
-  {
-    id: "a20cbc4a-9fc0-4294-8340-e62948326f84",
-    descricao_conta: "Itaú - Conta Principal",
-    entradas: [
-      { descricao: 'Salário', valor: 7500 },
-      { descricao: 'Vendas Online', valor: 2350.50 },
-      { descricao: 'Rendimentos', valor: 120.75 },
-      { descricao: 'Vendas Online', valor: 850.25 },
-    ],
-    saidas: [
-      { descricao: 'Aluguel', valor: 2500 },
-      { descricao: 'Supermercado', valor: 1800 },
-      { descricao: 'Internet/Telefone', valor: 350 },
-      { descricao: 'Transporte', valor: 450 },
-      { descricao: 'Supermercado', valor: 600 },
-    ]
-  },
-  {
-    id: "f1e2d3c4-5b6a-4e8d-9f0a-1b2c3d4e5f6a",
-    descricao_conta: "Nubank - Cartão de Crédito",
-    entradas: [
-      { descricao: 'Pagamento Fatura', valor: 4500 },
-    ],
-    saidas: [
-      { descricao: 'Restaurantes', valor: 850 },
-      { descricao: 'Assinaturas', valor: 150 },
-      { descricao: 'Compras Online', valor: 2200 },
-      { descricao: 'Lazer', valor: 600 },
-      { descricao: 'Restaurantes', valor: 400 },
-    ]
-  }
-]);
-  
-  const dadosDoResumo = ref([
-  {
-    "id": "9818bc34-7e74-435c-addc-f7e394a26801",
-    "descricao_conta": "Bradesco - Conta Poupança",
-    "total_entradas": 1500.00,
-    "total_saidas": 350.00
-  },
-  {
-    "id": "1da7b56a-4c2f-4e0d-9d2a-8c9f7b1e3a4f",
-    "descricao_conta": "Santander - Conta Salário",
-    "total_entradas": 8800.00,
-    "total_saidas": 8750.90
-  },
-  {
-    "id": "b8e9c2d1-5a6b-4f8c-9a0e-7d6f5c4b3a2e",
-    "descricao_conta": "Banco do Brasil - Conta Empresarial",
-    "total_entradas": 85300.75,
-    "total_saidas": 72150.20
-  },
-  {
-    "id": "c3d4e5f6-7a8b-4c9d-8e1f-2a3b4c5d6e7f",
-    "descricao_conta": "Caixa Econômica - Poupança Fácil",
-    "total_entradas": 500.00,
-    "total_saidas": 50.00
-  },
-  {
-    "id": "f1e2d3c4-5b6a-4e8d-9f0a-1b2c3d4e5f6a",
-    "descricao_conta": "Nubank - Conta Digital",
-    "total_entradas": 12400.30,
-    "total_saidas": 11890.00
-  },
-  {
-    "id": "a7b8c9d0-1e2f-4a5b-8c6d-7e8f9a0b1c2d",
-    "descricao_conta": "Inter - Conta Digital PJ",
-    "total_entradas": 45000.00,
-    "total_saidas": 48500.10
-  },
-  {
-    "id": "e3f4a5b6-c7d8-4e9f-8a0b-1c2d3e4f5a6b",
-    "descricao_conta": "Sicoob - Conta Cooperado",
-    "total_entradas": 9870.00,
-    "total_saidas": 6500.00
-  },
-  {
-    "id": "d9e8f7a6-b5c4-4d3e-a2b1-c0d9e8f7a6b5",
-    "descricao_conta": "Bradesco - Conta de Investimentos",
-    "total_entradas": 35000.00,
-    "total_saidas": 15000.00
-  },
-  {
-    "id": "c1d0e9f8-a7b6-4c5d-8e3f-2a1b0c9d8e7f",
-    "descricao_conta": "Itaú - Conta Universitária",
-    "total_entradas": 1200.50,
-    "total_saidas": 1150.75
-  }]);
-
-  const simulatedTitle = ref('Comparativo de Variação Anual (R$)');
-  const simulatedCategories = ref([
-    'Vendas',
-    'Recebimento Crediário',
-    'Fornecedores',
-    'Taxas de Meios de Pag.',
-    'Despesas Financeiras',
-  ]);
-
-  const simulatedSeries = ref([
-    {
-      name: 'Ano Atual',
-      data: [
-        2093740,  // Vendas
-        10885104, // Recebimento Crediário
-        5621570,  // Fornecedores
-        2314620,  // Taxas de Meios de Pag.
-        800660,   // Despesas Financeiras
-      ],
-    },
-    {
-      name: 'Ano Anterior',
-      // O TRUQUE: Estes são os valores do ano anterior, mas multiplicados por -1.
-      // Isso faz com que as barras cresçam para o lado oposto no gráfico.
-      data: [
-        -1320629,   // Vendas
-        -11401534,  // Recebimento Crediário
-        -15050447,  // Fornecedores
-        -22959425,  // Taxas de Meios de Pag.
-        -686434,    // Despesas Financeiras
-      ],
-    },
-  ]);
-
-  const financialData = ref({
-  "saidas": {
-    "despesasFinanceiras": {
-      "taxaAdm": 20.00,
-      "totalDespesasFinanceiras":20
-    },
-    "fornecedores": 20.00,
-    "outrasDespesas": 20.00,
-    "totalSaidas": 60.00
-  },
-  "entradas": {
-    "receitaVendas": {
-      "vendas": 20.00,
-      "recebimentoCrediario": 20.00,
-      "totalReceitaVendas":40
-    },
-    "totalEntradas": 40.00
-  }
-});
 
 const receitaDespesaOptions = {
   chart: {
     id: 'receita-despesa'
   },
-  fill:{
-    type: 'gradient',
-    gradient: {
-      shadeIntensity: 1,
-      opacityFrom: 1,
-      opacityTo: 1,
-      stops: [0, 90, 100]
-    }
-  },
-  colors: [theme.current.value.colors.chart01, theme.current.value.colors.chart02],
+  colors: ['#38A169', '#90A4AE'],
   title: {
     text: 'Receitas x Despesas',
     style: {
@@ -547,6 +373,9 @@ const receitaDespesaOptions = {
       fontSize: '9px',
       colors: ['white']
     }
+  },
+  fill: {
+    opacity: 0.8
   }
 }
 
@@ -606,11 +435,11 @@ const saldoOptions = {
       color: 'primary'
     }
   },
-  colors: [theme.current.value.colors.chart01],
+  colors: ['#A0D2F3'],
   fill:{
     type: 'gradient',
     gradient: {
-      shadeIntensity: 1,
+      shadeIntensity: 0.5,
       opacityFrom: 1,
       opacityTo: 1,
       stops: [0, 100]
@@ -642,26 +471,20 @@ const stackedBarOptions = {
     enabled: false
   },
   colors: [
-    theme.current.value.colors.chart01,
-    theme.current.value.colors.chart02,
-    theme.current.value.colors.chart03,
-    theme.current.value.colors.chart04,
-    theme.current.value.colors.chart05,
+    "#0052CC",
+    "#38A169",
+    "#F7B500",
+    "#42A5F5",
+    "#A5D6A7",
   ],
-  fill:{
-    type: 'gradient',
-    gradient: {
-      shadeIntensity: 1,
-      opacityFrom: 1,
-      opacityTo: 1,
-      stops: [0, 50, 100]
-    }
-  },
   tooltip: {
     y: {
       formatter: formatPercent
     }
   },
+  fill: {
+    opacity: 0.7
+  }
 }
 
 const stackedBarSeries = [
@@ -731,16 +554,16 @@ const fluxoOptions = {
     }
   },
   colors: [
-    theme.current.value.colors.chart01,
-    theme.current.value.colors.chart02,
+    "#38A169",
+    "#90A4AE",
   ],
   fill:{
     type: 'gradient',
     gradient: {
-      shadeIntensity: 1,
+      shadeIntensity: 0.6,
       opacityFrom: 1,
-      opacityTo: 1,
-      stops: [0, 99, 100]
+      opacityTo: 0.5,
+      stops: [0, 100]
     }
   },
   tooltip: {
@@ -790,28 +613,70 @@ const contasOptions = {
       color: 'primary'
     }
   },
-  colors: [
-    theme.current.value.colors.chart01,
-    theme.current.value.colors.chart02,
-  ],
-  fill:{
-    type: 'gradient',
-    gradient: {
-      shadeIntensity: 1,
-      opacityFrom: 1,
-      opacityTo: 1,
-      stops: [0, 100]
-    }
-  },
+  colors: ['#38A169', '#90A4AE'],
   tooltip: {
     y: {
       formatter: formatCurrency
     }
   },
+  fill: {
+    opacity: 0.8
+  }
 }
 const contasSeries = [
   { name: 'Receita', data: [5000, 4200, 3000] },
   { name: 'Despesa', data: [3000, 2800, 2500] }
 ]
+
+const categoriaReceitaOptions = {
+  labels: ['Vendas Físicas', 'Vendas Online', 'Serviços', 'Parcerias', 'Campanhas'],
+  title: { 
+    text: 'Receitas por Categoria',
+    style: {
+      fontSize: '15px',
+      fontWeight: 'medium',
+      color: 'primary'
+    }
+  },
+  colors: [
+    "#0052CC",
+    "#38A169",
+    "#F7B500",
+    "#42A5F5",
+    "#A5D6A7",
+  ],
+  stroke: {
+    show: false
+  },
+  fill: {
+    opacity: 0.8
+  }
+}
+const categoriaDespesaOptions = {
+  labels: ['Salários', 'Fornecedores', 'Aluguel', 'Energia', 'Logística'],
+  title: { 
+    text: 'Despesas por Categoria',
+    style: {
+      fontSize: '15px',
+      fontWeight: 'medium',
+      color: 'primary'
+    }
+  },
+  colors: [
+    "#0052CC",
+    "#38A169",
+    "#F7B500",
+    "#42A5F5",
+    "#A5D6A7",
+  ],
+  stroke: {
+    show: false
+  },
+  fill: {
+    opacity: 0.8
+  } 
+}
+const categoriaReceitaSeries = [0.5926, 0.2928, 0.0388, 0.0253, 0.0505]
+const categoriaDespesaSeries = [0.4132, 0.3387, 0.1378, 0.0407, 0.0580]
 
 </script>

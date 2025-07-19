@@ -32,7 +32,7 @@ export default createVuetify({
           // Personalizadas (usadas por nome)
           background: '#22415E',
           lightbackground: '#CFD8DC',
-          chart01: '#0277BD',
+          chart01: '#0288D1',
           chart02: '#BA68C8',
           chart03: '#4DB6AC',
           chart04: '#7E57C2',

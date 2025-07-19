@@ -58,24 +58,8 @@ const baseChartOptions = {
       enabled: false
     }
   },
-  title: {
-    style: {
-      fontSize: '15px',
-      fontWeight: 'medium',
-      color: 'primary'
-    }
-  },
   dataLabels: { enabled: false },
   stroke: { curve: 'smooth', width: 1 },
-  fill: {
-    type: 'gradient',
-    gradient: {
-      shadeIntensity: 1,
-      opacityFrom: 1,
-      opacityTo: 1,
-      stops: [0, 90, 100],
-    },
-  },
   yaxis: {
     labels: {
       formatter: formatCurrency,
@@ -96,6 +80,13 @@ const computedChartOptions = computed(() => {
         formatter: formatCurrency,
       }
     },
+    title: {
+    style: {
+      fontSize: '15px',
+      fontWeight: 'medium',
+      color: 'primary'
+    }
+    }
   };
   return {
     ...baseChartOptions,
@@ -109,6 +100,10 @@ const computedChartOptions = computed(() => {
     xaxis: {
       ...optionsFromProps.xaxis,
       ...(props.options as any)?.xaxis,
+    },
+    title: {
+      ...optionsFromProps.title,
+      ...(props.options as any)?.title,
     },
   };
 })

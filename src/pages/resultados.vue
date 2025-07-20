@@ -109,9 +109,17 @@
     </v-col>
   </v-row>
 
+  <v-row>
+    <v-col cols="12" md="12">
+      <DreChart></DreChart>
+    </v-col>
+  </v-row>
+
+
 </template>
 
 <script setup lang="ts">
+import DreChart from '@/components/DreChart.vue';
 import { useFormatters } from '@/composables/useFormatters';
 
 const { formatCurrency, formatPercent } = useFormatters();

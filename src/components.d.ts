@@ -16,6 +16,7 @@ declare module 'vue' {
     ClickCard: typeof import('./components/ClickCard.vue')['default']
     DeleteTenantModal: typeof import('./components/modal/DeleteTenantModal.vue')['default']
     DeleteUserModal: typeof import('./components/modal/DeleteUserModal.vue')['default']
+    DreChart: typeof import('./components/DreChart.vue')['default']
     EditTenantModal: typeof import('./components/modal/EditTenantModal.vue')['default']
     EditUserModal: typeof import('./components/modal/EditUserModal.vue')['default']
     GaugeCard: typeof import('./components/dashboard/GaugeCard.vue')['default']
